@@ -35,9 +35,11 @@ namespace BlobDemo.Services
             }
         }
 
-        public Task Upload(FileModel model)
+        public async Task Upload(FileModel model)
         {
-            throw new NotImplementedException();
+            var blobContainer = _blobServiceClient.GetBlobContainerClient("dir1");
+            var blobClient = blobContainer.GetBlobClient(model.ImageFile.FileName);
+            await blobClient.UploadAsync(model.ImageFile.OpenReadStream());
         }
 
     
